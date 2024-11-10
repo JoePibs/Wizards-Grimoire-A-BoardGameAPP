@@ -1,12 +1,20 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { UsersService } from './users/users.service';
+import { User } from './users/user.model';
+import { Param } from '@nestjs/common';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly usersService: UsersService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('users')
+  async getUsers(): Promise<User[]> {
+    return this.usersService.getAllUsers();
   }
+
+  @Get('users/:id')
+async getUserById(@Param('id') id: number): Promise<User | null> {
+  console.log('User ID:', id); // Vérifiez si l'ID est correctement capté
+  return this.usersService.getUserById(id);
+}
 }
