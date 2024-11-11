@@ -8,6 +8,12 @@ export class Illustrator extends Model<Illustrator> {
   })
   id: number;
 
-  @Column
+  @Column({
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      len: [3, 100],
+    },
+  })
   name: string;
 }
