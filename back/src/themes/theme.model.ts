@@ -6,13 +6,14 @@ import {
   BelongsToMany,
 } from 'sequelize-typescript';
 import { Game } from '../games/game.model';
-import { GameIllustrator } from '../gamesIllustrators/game-illustrator.model';
+import { GameTheme } from '../gamesThemes/game-theme.model';
 
-@Table({ tableName: 'illustrators', timestamps: false })
-export class Illustrator extends Model<Illustrator> {
+@Table({ tableName: 'themes', timestamps: false })
+export class Theme extends Model<Theme> {
   @Column({
     primaryKey: true,
     autoIncrement: true,
+    type: DataType.INTEGER,
   })
   id: number;
 
@@ -23,6 +24,6 @@ export class Illustrator extends Model<Illustrator> {
   })
   name: string;
 
-  @BelongsToMany(() => Game, () => GameIllustrator)
+  @BelongsToMany(() => Game, () => GameTheme)
   games: Game[];
 }

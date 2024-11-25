@@ -6,10 +6,10 @@ import {
   BelongsToMany,
 } from 'sequelize-typescript';
 import { Game } from '../games/game.model';
-import { GameIllustrator } from '../gamesIllustrators/game-illustrator.model';
+import { GameEditor } from '../gamesEditors/game-editor.model';
 
-@Table({ tableName: 'illustrators', timestamps: false })
-export class Illustrator extends Model<Illustrator> {
+@Table({ tableName: 'editors', timestamps: false })
+export class Editor extends Model<Editor> {
   @Column({
     primaryKey: true,
     autoIncrement: true,
@@ -23,6 +23,6 @@ export class Illustrator extends Model<Illustrator> {
   })
   name: string;
 
-  @BelongsToMany(() => Game, () => GameIllustrator)
+  @BelongsToMany(() => Game, () => GameEditor)
   games: Game[];
 }
