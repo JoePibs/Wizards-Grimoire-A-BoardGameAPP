@@ -19,6 +19,9 @@ import { GameMechanic } from './gamesMechanics/game-mechanic.model';
 import { GameTheme } from './gamesThemes/game-theme.model';
 import { Game } from './games/game.model';
 import { GamesModule } from './games/games.module';
+import { AuthorsModule } from './authors/authors.module';
+import { Author } from './authors/author.model';
+import { GameAuthor } from './gamesAuthors/game-author.model';
 
 dotenv.config();
 @Module({
@@ -42,6 +45,8 @@ dotenv.config();
         GameMechanic,
         GameTheme,
         Game,
+        Author,
+        GameAuthor,
       ],
     }),
     UsersModule,
@@ -51,6 +56,7 @@ dotenv.config();
     MechanicsModule,
     ThemesModule,
     GamesModule,
+    AuthorsModule,
   ],
   providers: [],
 })

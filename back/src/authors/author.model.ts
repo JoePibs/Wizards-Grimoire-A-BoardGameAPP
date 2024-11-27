@@ -6,10 +6,10 @@ import {
   BelongsToMany,
 } from 'sequelize-typescript';
 import { Game } from '../games/game.model';
-import { GameMechanic } from '../gamesMechanics/game-mechanic.model';
+import { GameAuthor } from '../gamesAuthors/game-author.model';
 
-@Table({ tableName: 'mechanics', timestamps: false })
-export class Mechanic extends Model<Mechanic> {
+@Table({ tableName: 'authors', timestamps: false })
+export class Author extends Model<Author> {
   @Column({
     primaryKey: true,
     autoIncrement: true,
@@ -24,6 +24,6 @@ export class Mechanic extends Model<Mechanic> {
   })
   name: string;
 
-  @BelongsToMany(() => Game, () => GameMechanic)
+  @BelongsToMany(() => Game, () => GameAuthor)
   games: Game[];
 }
