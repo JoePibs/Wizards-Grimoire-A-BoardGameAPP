@@ -24,7 +24,7 @@ export class IllustratorsService {
   async findOne(id: number): Promise<Illustrator> {
     const illustrator = await this.illustratorModel.findByPk(id);
     if (!illustrator) {
-      throw new Error(`Illustrator with id ${id} not found`); // Gérer le cas où l'illustrateur n'est pas trouvé
+      throw new NotFoundException(`Illustrator with id ${id} not found`);
     }
     return illustrator;
   }

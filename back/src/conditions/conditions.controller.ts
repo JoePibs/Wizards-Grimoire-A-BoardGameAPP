@@ -1,18 +1,22 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, NotFoundException } from '@nestjs/common';
 import { ConditionsService } from './conditions.service';
 import { Condition } from './condition.model';
 
-@Controller('conditions') // La route sera accessible sous /users
+@Controller('conditions')
 export class ConditionsController {
   constructor(private readonly ConditionsService: ConditionsService) {}
 
-  @Get() // Cette route récupère tous les utilisateurs
+  @Get()
   async findAll(): Promise<Condition[]> {
     return this.ConditionsService.getAllConditions();
   }
 
-  @Get(':id') // Cette route récupère un utilisateur spécifique par ID
+  @Get('unicorn/:id')
   async findOne(@Param('id') id: number): Promise<Condition | null> {
-    return this.ConditionsService.getConditionById(id);
+    const condition = await this.ConditionsService.getConditionById(id);
+    if (!condition) {
+      throw new NotFoundException(`Condition with id ${id} not found`);
+    }
+    return condition;
   }
 }
