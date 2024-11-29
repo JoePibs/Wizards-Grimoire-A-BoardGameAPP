@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { UsersModule } from './users/user.module';
+import { UsersModule } from './users/users.module';
 import { User } from './users/user.model';
 import { Condition } from './conditions/condition.model';
 import { Illustrator } from './illustrators/illustrator.model';
@@ -22,6 +22,14 @@ import { GamesModule } from './games/games.module';
 import { AuthorsModule } from './authors/authors.module';
 import { Author } from './authors/author.model';
 import { GameAuthor } from './gamesAuthors/game-author.model';
+import { RentingGame } from './renting_games/renting_game.model';
+import { RentingGamesModule } from './renting_games/renting_games.module';
+import { SellingGamesModule } from './selling_games/selling_games.module';
+import { SellingGame } from './selling_games/selling_game.model';
+import { RentsModule } from './rents/rents.module';
+import { Rent } from './rents/rent.model';
+import { SalesModule } from './sales/sales.module';
+import { Sale } from './sales/sale.model';
 
 dotenv.config();
 @Module({
@@ -47,6 +55,10 @@ dotenv.config();
         Game,
         Author,
         GameAuthor,
+        RentingGame,
+        SellingGame,
+        Rent,
+        Sale,
       ],
     }),
     UsersModule,
@@ -57,6 +69,10 @@ dotenv.config();
     ThemesModule,
     GamesModule,
     AuthorsModule,
+    RentingGamesModule,
+    SellingGamesModule,
+    RentsModule,
+    SalesModule,
   ],
   providers: [],
 })

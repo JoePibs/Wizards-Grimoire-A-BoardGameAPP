@@ -11,6 +11,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Module } from '@nestjs/common';
 import { GamesController } from './games.controller';
 import { GamesService } from './games.service';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { GamesService } from './games.service';
       GameMechanic,
       GameTheme,
     ]),
+    UsersModule,
   ],
   controllers: [GamesController],
   providers: [GamesService],

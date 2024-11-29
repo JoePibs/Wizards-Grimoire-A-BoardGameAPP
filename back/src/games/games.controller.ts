@@ -7,11 +7,14 @@ import {
   Param,
   Put,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { GamesService } from './games.service';
 import { Game } from './game.model';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Controller('games')
+@UseGuards(JwtAuthGuard)
 export class GamesController {
   constructor(private readonly gamesService: GamesService) {}
 
