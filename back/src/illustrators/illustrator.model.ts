@@ -1,4 +1,12 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  BelongsToMany,
+} from 'sequelize-typescript';
+import { Game } from '../games/game.model';
+import { GameIllustrator } from '../gamesIllustrators/game-illustrator.model';
 
 @Table({ tableName: 'illustrators', timestamps: false })
 export class Illustrator extends Model<Illustrator> {
@@ -8,6 +16,13 @@ export class Illustrator extends Model<Illustrator> {
   })
   id: number;
 
-  @Column
+  @Column({
+    allowNull: false,
+    unique: true,
+    type: DataType.STRING(255),
+  })
   name: string;
+
+  @BelongsToMany(() => Game, () => GameIllustrator)
+  games: Game[];
 }

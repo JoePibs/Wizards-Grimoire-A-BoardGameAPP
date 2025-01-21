@@ -17,7 +17,6 @@ import { Illustrator } from './illustrator.model';
 export class IllustratorsController {
   constructor(private readonly illustratorsService: IllustratorsService) {}
 
-  // Endpoint pour créer un illustrateur
   @Post()
   async create(
     @Body() createIllustratorDto: CreateIllustratorDto,
@@ -25,19 +24,16 @@ export class IllustratorsController {
     return this.illustratorsService.create(createIllustratorDto);
   }
 
-  // Endpoint pour récupérer tous les illustrateurs
   @Get()
   async findAll(): Promise<Illustrator[]> {
     return this.illustratorsService.findAll();
   }
 
-  // Endpoint pour récupérer un illustrateur par ID
   @Get(':id')
   async findOne(@Param('id') id: number): Promise<Illustrator> {
     return this.illustratorsService.findOne(id);
   }
 
-  // Endpoint pour mettre à jour un illustrateur par ID
   @Patch(':id')
   async update(
     @Param('id') id: number,
@@ -46,7 +42,6 @@ export class IllustratorsController {
     return this.illustratorsService.update(id, updateIllustratorDto);
   }
 
-  // Endpoint pour supprimer un illustrateur par ID
   @Delete(':id')
   async remove(@Param('id') id: number): Promise<void> {
     return this.illustratorsService.remove(id);
