@@ -14,7 +14,7 @@ import { Game } from './game.model';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Controller('games')
-@UseGuards(JwtAuthGuard)
+//@UseGuards(JwtAuthGuard)
 export class GamesController {
   constructor(private readonly gamesService: GamesService) {}
 
