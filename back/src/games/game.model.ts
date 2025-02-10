@@ -13,6 +13,11 @@ import { GameMechanic } from 'src/gamesMechanics/game-mechanic.model';
 import { Mechanic } from 'src/mechanics/mechanic.model';
 import { GameTheme } from 'src/gamesThemes/game-theme.model';
 import { Theme } from 'src/themes/theme.model';
+import { GameAuthor } from 'src/gamesAuthors/game-author.model';
+import { Author } from 'src/authors/author.model';
+
+
+
 
 @Table({ tableName: 'games', timestamps: false })
 export class Game extends Model<Game> {
@@ -175,4 +180,6 @@ export class Game extends Model<Game> {
   mechanics: Mechanic[];
   @BelongsToMany(() => Theme, () => GameTheme)
   themes: Theme[];
+  @BelongsToMany(() => Author, () => GameAuthor)
+  authors: Author[];
 }

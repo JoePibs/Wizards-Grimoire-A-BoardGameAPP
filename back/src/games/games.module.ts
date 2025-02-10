@@ -5,6 +5,8 @@ import { GameMechanic } from 'src/gamesMechanics/game-mechanic.model';
 import { GameTheme } from 'src/gamesThemes/game-theme.model';
 import { Mechanic } from 'src/mechanics/mechanic.model';
 import { Illustrator } from 'src/illustrators/illustrator.model';
+import { GameAuthor } from 'src/gamesAuthors/game-author.model';
+import { Author } from 'src/authors/author.model';
 import { Game } from './game.model';
 import { Editor } from '../editors/editor.model';
 import { SequelizeModule } from '@nestjs/sequelize';
@@ -18,6 +20,7 @@ import { UsersModule } from '../users/users.module';
     SequelizeModule.forFeature([
       Game,
       Editor,
+      Author,
       Illustrator,
       Mechanic,
       Theme,
@@ -25,8 +28,10 @@ import { UsersModule } from '../users/users.module';
       GameIllustrator,
       GameMechanic,
       GameTheme,
+      GameAuthor
     ]),
     UsersModule,
+    SequelizeModule
   ],
   controllers: [GamesController],
   providers: [GamesService],

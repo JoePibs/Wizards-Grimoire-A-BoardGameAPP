@@ -25,6 +25,18 @@ export class EditorsService {
     }
     return editor;
   }
+
+  async findOneByName(name: string): Promise<Editor> {
+    const editor = await this.editorModel.findOne({
+      where: { name }, 
+    });
+    if (!editor) {
+      throw new NotFoundException(`Editor with name ${name} not found`);
+    }
+    return editor;
+  }
+
+
   async findAll(): Promise<Editor[]> {
     return this.editorModel.findAll();
   }

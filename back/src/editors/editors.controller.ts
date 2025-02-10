@@ -30,6 +30,11 @@ export class EditorsController {
     return this.editorsService.findOne(+id);
   }
 
+  @Get('name/:name')
+  findOnebyName(@Param('name') name: string) {
+    return this.editorsService.findOneByName(name);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEditorDto: UpdateEditorDto) {
     return this.editorsService.update(+id, updateEditorDto);
