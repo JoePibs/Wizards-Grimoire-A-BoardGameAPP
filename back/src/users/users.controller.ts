@@ -5,6 +5,7 @@ import {
   Post,
   Body,
   NotFoundException,
+  BadRequestException,
   UseGuards,
   ParseIntPipe,
   Req,
@@ -17,28 +18,15 @@ import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post('register')
-  async create(@Body() createUserData: any): Promise<User> {
-    return this.usersService.createUser(createUserData);
-  }
-
-  @Post('login')
-  async login(
-    @Body() loginData: { email: string; password: string },
-  ): Promise<{ token: string }> {
-    const { email, password } = loginData;
-    return this.usersService.login(email, password);
-  }
-
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<Partial<User>[]> {
     return this.usersService.getAllUsers();
   }
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number): Promise<User> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Partial<User>> {
     const user = await this.usersService.getUserById(id);
 
     if (!user) {
@@ -48,10 +36,19 @@ export class UsersController {
     return user;
   }
 
-  // Route protégée : récupérer le profil de l'utilisateur connecté
   @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  async getProfile(@Req() req: any): Promise<User> {
-    return req.user; // `req.user` est attaché par le guard après vérification du token
+@Post('profile')
+async getProfile(@Req() request: any): Promise<Partial<User>> {
+  const user = request.user;
+  
+  // Assurez-vous que l'ID est un nombre avant de l'envoyer
+  const userId = Number(user.id); 
+
+  if (isNaN(userId)) {
+    throw new BadRequestException('ID utilisateur invalide');
   }
+
+  return this.usersService.getProfile(userId);
+}
+
 }

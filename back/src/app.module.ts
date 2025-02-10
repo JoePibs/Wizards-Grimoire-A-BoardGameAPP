@@ -30,6 +30,7 @@ import { RentsModule } from './rents/rents.module';
 import { Rent } from './rents/rent.model';
 import { SalesModule } from './sales/sales.module';
 import { Sale } from './sales/sale.model';
+import { AuthController } from './auth/auth.controller'; 
 
 dotenv.config();
 @Module({
@@ -73,6 +74,9 @@ dotenv.config();
     SellingGamesModule,
     RentsModule,
     SalesModule,
+  ],
+  controllers: [ 
+    AuthController,  
   ],
   providers: [],
 })
