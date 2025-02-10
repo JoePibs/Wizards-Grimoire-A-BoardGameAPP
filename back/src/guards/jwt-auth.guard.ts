@@ -8,28 +8,20 @@ import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(private readonly usersService: UsersService) {
-    console.log('UsersService injecté dans JwtAuthGuard'); // Vérifie si l'injection fonctionne
-  }
+  constructor(private readonly usersService: UsersService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const authHeader = request.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      throw new UnauthorizedException(
-        'Authorization header manquant ou invalide',
-      );
+      console.log('Authorization header manquant ou invalide');
+      throw new UnauthorizedException('Authorization header manquant ou invalide');
     }
 
     const token = authHeader.split(' ')[1];
-
     try {
       const user = await this.usersService.validateToken(token);
-      if (!user) {
-        throw new UnauthorizedException('Utilisateur non trouvé');
-      }
-
       request.user = user;
       return true;
     } catch (err) {
@@ -37,3 +29,5 @@ export class JwtAuthGuard implements CanActivate {
     }
   }
 }
+
+
