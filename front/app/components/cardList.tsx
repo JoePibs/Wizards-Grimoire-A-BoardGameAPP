@@ -41,22 +41,26 @@ const CardList = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {cards.map((card, index) => (
-        <Card
-          key={index} 
-          name={card.name}
-          short_description={card.short_description}
-          image={card.image}
-          editors={card.editors}
-          illustrators={card.illustrators}
-          themes={card.themes}
-          mechanics={card.mechanics.map(mechanic => mechanic.name)}
-          min_age={card.min_age}
-          min_player={card.min_player}
-          max_player={card.max_player}
-        />
-      ))}
+    
+    <div>
+        <h1 className="text-xl font-bold text-gray-1500 dark:text-white">LES JEUX</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {cards.map((card, index) => (
+            <Card
+              key={index} 
+              name={card.name}
+              short_description={card.short_description}
+              image={card.image}
+              editors={card.editors}
+              illustrators={card.illustrators}
+              themes={card.themes}
+              mechanics={card.mechanics.map(mechanic => mechanic.name)}
+              min_age={card.min_age}
+              min_player={card.min_player}
+              max_player={card.max_player}
+            />
+          ))}
+      </div>
     </div>
   );
 };

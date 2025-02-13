@@ -54,6 +54,13 @@ export class Game extends Model<Game> {
 
   @Column({
     allowNull: true,
+    type: DataType.STRING(255),
+  })
+  ean: string;
+  
+
+  @Column({
+    allowNull: true,
     type: DataType.TEXT,
   })
   title_long_description: string;

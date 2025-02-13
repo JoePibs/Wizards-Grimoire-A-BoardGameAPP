@@ -30,9 +30,10 @@ import { RentsModule } from './rents/rents.module';
 import { Rent } from './rents/rent.model';
 import { SalesModule } from './sales/sales.module';
 import { Sale } from './sales/sale.model';
-import { AuthController } from './auth/auth.controller'; 
+import { AuthController } from './auth/auth.controller';
 
 dotenv.config();
+
 @Module({
   imports: [
     SequelizeModule.forRoot({
@@ -75,9 +76,7 @@ dotenv.config();
     RentsModule,
     SalesModule,
   ],
-  controllers: [ 
-    AuthController,  
-  ],
-  providers: [],
+  controllers: [AuthController],
 })
-export class AppModule {}
+export class AppModule {
+}
