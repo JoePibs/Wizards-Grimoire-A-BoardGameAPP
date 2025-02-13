@@ -108,8 +108,13 @@ export class GamesService {
   async getAllGames(): Promise<Game[]> {
     return this.gameModel.findAll({
       where: { extension: "" },
-      attributes: ['name', 'id'], // Sélectionne uniquement le nom du jeu
-    });
+      include: [
+        { model: Editor },
+        { model: Illustrator },
+        { model: Mechanic },
+        { model: Theme },
+      ],
+  });
   }
 
   // Récupérer tous les jeux en français
