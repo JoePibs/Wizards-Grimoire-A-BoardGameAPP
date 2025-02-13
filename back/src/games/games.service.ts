@@ -58,7 +58,7 @@ export class GamesService {
       const theme = createGameBody.theme_name ? await this.findOrCreateEntity(this.themeModel, createGameBody.theme_name) : null;
       const mechanic = createGameBody.mechanic_name ? await this.findOrCreateEntity(this.mechanicModel, createGameBody.mechanic_name) : null;
       const author = createGameBody.author_name ? await this.findOrCreateEntity(this.authorModel, createGameBody.author_name) : null;
-      console.log(editor,illustrator,author)
+    
       // Crée le jeu
       game = await this.gameModel.create(createGameBody, { transaction });
       console.log('Created game ID:', game.id);
@@ -106,8 +106,30 @@ export class GamesService {
 
   // Récupérer tous les jeux
   async getAllGames(): Promise<Game[]> {
-    return this.gameModel.findAll();
+    return this.gameModel.findAll({
+      where: { extension: "" },
+      include: [
+        { model: Editor },
+        { model: Illustrator },
+        { model: Mechanic },
+        { model: Theme },
+      ],
+  });
   }
+
+  // Récupérer tous les jeux en français
+  async getFrGames(): Promise<Game[]> {
+    return this.gameModel.findAll({
+      where: { lang: "Français",extension:"" },
+      include: [
+        { model: Editor },
+        { model: Illustrator },
+        { model: Mechanic },
+        { model: Theme },
+      ],
+    });
+  }
+
 
   // Récupérer un jeu par ID
   async getGameById(id: number): Promise<Game> {

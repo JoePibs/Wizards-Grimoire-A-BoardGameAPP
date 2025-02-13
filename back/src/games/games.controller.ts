@@ -30,6 +30,11 @@ export class GamesController {
     return this.gamesService.getAllGames();
   }
 
+  @Get('/fr')
+  async findFrGames(): Promise<Game[]> {
+    return this.gamesService.getFrGames();
+  }
+
   // Récupérer un jeu par ID
   @Get(':id')
   async findOne(@Param('id') id: number): Promise<Game> {
