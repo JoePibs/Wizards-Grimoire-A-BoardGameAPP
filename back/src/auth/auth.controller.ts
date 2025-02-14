@@ -5,12 +5,12 @@ import {
   } from '@nestjs/common';
   import { UsersService } from '../users/users.service';
   
-  @Controller() 
+  @Controller('auth') 
   export class AuthController {
     constructor(private readonly usersService: UsersService) {}
   
     @Post('register')
-    async register(@Body() createUserData: any): Promise<string> {
+    async register(@Body() createUserData: any): Promise<{ message: string; userId: number; pseudo: string; email: string; token: string }> {
       return this.usersService.createUser(createUserData);
     }
   

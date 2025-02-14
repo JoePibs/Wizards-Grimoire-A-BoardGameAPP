@@ -13,7 +13,7 @@ export class UsersService {
     private userModel: typeof User,
   ) {}
 
-  async createUser(data: any): Promise<string> {
+  async createUser(data: any): Promise<{ message: string; userId: number; pseudo: string; email: string; token: string }> {
     
     const existingEmail = await this.userModel.findOne({ where: { email: data.email } });
     if (existingEmail) {
@@ -31,11 +31,26 @@ export class UsersService {
       ...data,
       password: hashedPassword,
     });
+    
+    const token = generateToken({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    });
+  
 
-    return `L'utilisateur ${user.pseudo} a été créé avec succès`;
+    return {
+      message: `L'utilisateur ${user.pseudo} a été créé avec succès`,
+      userId: user.id,
+      pseudo: user.pseudo,
+      email: user.email,
+      token,
+    };
+
+    
   } 
 
-  async login(email: string, password: string): Promise<{ token: string }> {
+  async login(email: string, password: string): Promise<{ token: string, userId: number }> {
     const user = await this.userModel.findOne({ where: { email } });
     if (!user || !(await comparePasswords(password, user.password))) {
       throw new UnauthorizedException('Email ou mot de passe incorrect');
@@ -46,7 +61,7 @@ export class UsersService {
       role: user.role,
     });
 
-    return { token };
+    return { token, userId: user.id };
   }
 
   async validateToken(token: string): Promise<Partial<User>> {
