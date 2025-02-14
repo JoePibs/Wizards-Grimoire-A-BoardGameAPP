@@ -8,10 +8,10 @@ interface CardData {
   name: string;
   short_description: string;
   image: string;
-  editors: string[];
-  illustrators : string[];
-  themes : string[];
-  mechanics : string[];
+  editors: [];
+  illustrators : [];
+  themes : [];
+  mechanics : [];
   min_age : number;
   min_player : number;
   max_player : number ;
@@ -54,7 +54,7 @@ const CardList = () => {
               editors={card.editors}
               illustrators={card.illustrators}
               themes={card.themes}
-              mechanics={card.mechanics.map(mechanic => mechanic.name)}
+              mechanics={card.mechanics}
               min_age={card.min_age}
               min_player={card.min_player}
               max_player={card.max_player}
