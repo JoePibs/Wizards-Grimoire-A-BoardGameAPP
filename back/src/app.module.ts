@@ -38,11 +38,15 @@ dotenv.config();
   imports: [
     SequelizeModule.forRoot({
       dialect: 'mysql',
-      host: '127.0.0.1',
-      port: 3306,
-      username: process.env.DB_USER,
-      password: process.env.PASSWORD,
-      database: process.env.DATABASE,
+      host: process.env.DB_HOST || 'mysql',
+      port: Number(process.env.DB_PORT) || 3306,
+      username: process.env.DB_USER || 'root',
+      password: process.env.DB_PASSWORD || 'Liberte64$',
+      database: process.env.DB_NAME || '',
+      logging: console.log, // Pour afficher les requêtes SQL dans les logs
+      dialectOptions: {
+        ssl: false,
+      },
       models: [
         User,
         Condition,

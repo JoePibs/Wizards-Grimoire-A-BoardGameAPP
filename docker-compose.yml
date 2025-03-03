@@ -1,0 +1,59 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql_dev
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - mynetwork
+
+  backend:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    container_name: backend_dev
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./back:/app
+    ports:
+      - "3002:3002"
+    depends_on:
+      - mysql
+    environment:
+    - DB_HOST=mysql
+    - DB_PORT=3306
+    - DB_USER=root
+    - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    - DB_NAME=${MYSQL_DATABASE}
+    networks:
+      - mynetwork
+
+  frontend:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    container_name: frontend_dev
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./front:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  mysql_data:
