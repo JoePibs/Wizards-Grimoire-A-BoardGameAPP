@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './user.model';
@@ -104,7 +104,7 @@ export class UsersService {
     
     console.log('userId', userId);
     const user = await this.userModel.findByPk(userId, {
-      attributes: ['id', 'first_name', 'last_name', 'email', 'pseudo', 'city', 'role'],
+      attributes: ['id', 'first_name', 'last_name', 'email', 'pseudo', 'city','country', 'role' ,'bio','is_game_master'],
     });
 
     if (!user) {
@@ -113,4 +113,38 @@ export class UsersService {
 
     return user;
   }
+
+  async updateUser(
+    userId: number,
+    updateData: Partial<User>,
+  ): Promise<{ message: string; updatedFields: Partial<User> }> {
+    const user = await this.userModel.findByPk(userId);
+  
+    if (!user) {
+      throw new UnauthorizedException('Utilisateur introuvable');
+    }
+  
+    const allowedFields = ['first_name', 'last_name', 'pseudo', 'city', 'country', 'bio', 'is_game_master'];
+    const safeUpdateData: { [key: string]: any } = {};
+    
+    for (const field of allowedFields) {
+      if ((updateData as any)[field] !== undefined) {
+        safeUpdateData[field] = (updateData as any)[field];
+      }
+    }
+  
+    if (Object.keys(safeUpdateData).length === 0) {
+      throw new BadRequestException('Aucune donnée valide à mettre à jour');
+    }
+  
+    await user.update(safeUpdateData);
+  
+    return {
+      message: `L'utilisateur a été mis à jour avec succès`,
+      updatedFields: safeUpdateData,
+    };
+  }
+  
+  
+
 }

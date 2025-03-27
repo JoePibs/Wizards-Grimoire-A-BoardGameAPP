@@ -9,6 +9,7 @@ import {
   UseGuards,
   ParseIntPipe,
   Req,
+  Patch,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.model';
@@ -37,18 +38,24 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-@Post('profile')
-async getProfile(@Req() request: any): Promise<Partial<User>> {
-  const user = request.user;
-  
-  // Assurez-vous que l'ID est un nombre avant de l'envoyer
-  const userId = Number(user.id); 
+  @Post('profile')
+  async getProfile(@Req() request: any): Promise<Partial<User>> {
+    const user = request.user;
+    const userId = Number(user.id); 
 
-  if (isNaN(userId)) {
-    throw new BadRequestException('ID utilisateur invalide');
+    if (isNaN(userId)) {
+      throw new BadRequestException('ID utilisateur invalide');
+    }
+
+    return this.usersService.getProfile(userId);
   }
 
-  return this.usersService.getProfile(userId);
-}
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id')
+  async updateUser(@Param('id', ParseIntPipe) id: number, @Body() updateData: Partial<User>,
+  ): Promise<{ message: string; updatedFields: Partial<User> }> {
+    return this.usersService.updateUser(id, updateData);
+  }
+
 
 }

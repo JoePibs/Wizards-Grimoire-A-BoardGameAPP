@@ -29,8 +29,7 @@ const CardList = () => {
     const fetchCards = async () => {
       try {
         const response = await axios.get<CardData[]>('http://localhost:3002/games/fr'); 
-        setCards(response.data); 
-        console.log(response.data);
+        setCards(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des cartes:', error);
       } finally {
