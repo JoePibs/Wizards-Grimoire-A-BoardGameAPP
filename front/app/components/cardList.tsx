@@ -1,10 +1,11 @@
-
 'use client'
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Card from './card';
 
 interface CardData {
+  id: number;
   name: string;
   short_description: string;
   image: string;
@@ -15,6 +16,9 @@ interface CardData {
   min_age : number;
   min_player : number;
   max_player : number ;
+  long_description: string;
+  video_link: string;
+  price: number;
 }
 
 const CardList = () => {
@@ -25,7 +29,7 @@ const CardList = () => {
     const fetchCards = async () => {
       try {
         const response = await axios.get<CardData[]>('http://localhost:3002/games/fr'); 
-        setCards(response.data); 
+        setCards(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des cartes:', error);
       } finally {
@@ -58,6 +62,10 @@ const CardList = () => {
               min_age={card.min_age}
               min_player={card.min_player}
               max_player={card.max_player}
+              id={card.id}
+              long_description={card.long_description}
+              video_link={card.video_link}
+              price={card.price}
             />
           ))}
       </div>

@@ -1,3 +1,4 @@
+
 services:
   mysql:
     image: mysql:8
@@ -22,16 +23,17 @@ services:
     working_dir: /app
     volumes:
       - ./back:/app
+      - /app/node_modules  # 👈 Empêche le node_modules du conteneur d'être écrasé
     ports:
       - "3002:3002"
     depends_on:
       - mysql
     environment:
-    - DB_HOST=mysql
-    - DB_PORT=3306
-    - DB_USER=root
-    - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    - DB_NAME=${MYSQL_DATABASE}
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - DB_NAME=${MYSQL_DATABASE}
     networks:
       - mynetwork
 
@@ -44,6 +46,7 @@ services:
     working_dir: /app
     volumes:
       - ./front:/app
+      - /app/node_modules  # 👈 Même principe pour éviter les conflits
     ports:
       - "3000:3000"
     depends_on:

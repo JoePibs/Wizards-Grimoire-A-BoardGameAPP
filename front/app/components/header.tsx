@@ -40,7 +40,7 @@ const Header = () => {
 
           <div className="flex flex-col md:flex-row md:mx-6">
             <Link className="my-2 text-[#efc066] transition-colors duration-300 transform hover:text-white md:mx-4 md:my-0" href="#">Home</Link>
-            <Link className="my-2 text-[#efc066] transition-colors duration-300 transform hover:text-white md:mx-4 md:my-0" href="#">Profile</Link>
+            <Link className="my-2 text-[#efc066] transition-colors duration-300 transform hover:text-white md:mx-4 md:my-0" href={`/profil/${user.id}`}>Profile</Link>
             <Link className="my-2 text-[#efc066] transition-colors duration-300 transform hover:text-white md:mx-4 md:my-0" href="#" onClick={() => useAuthStore.getState().logout()}>Logout</Link>
           </div>
         </div>

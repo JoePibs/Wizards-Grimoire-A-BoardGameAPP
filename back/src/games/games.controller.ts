@@ -27,11 +27,13 @@ export class GamesController {
   // Récupérer tous les jeux
   @Get()
   async findAll(): Promise<Game[]> {
+
     return this.gamesService.getAllGames();
   }
 
   @Get('/fr')
   async findFrGames(): Promise<Game[]> {
+    console.log('toto')
     return this.gamesService.getFrGames();
   }
 
